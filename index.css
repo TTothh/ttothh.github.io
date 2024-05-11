@@ -1,0 +1,39 @@
+:root {
+  --box-size: 200px;
+  --incline: 20;
+  --inclineperc: calc(var(--incline) * 1%);
+  --margin-in: calc((0 - calc(var(--incline) / 2 * 1px)) - (var(--box-size) / var(--incline)));
+}
+
+.box {
+  width: var(--box-size);
+  height: var(--box-size);
+  margin: 0;
+  padding: 0;
+}
+
+#left {
+  background: url(https://styles.redditmedia.com/t5_2tny5/styles/communityIcon_jym3fzfhn7r61.png);
+  float: left;
+  clip-path: polygon(0% 0%, calc(100% - var(--inclineperc)) 0%, 100% 100%, 0% 100%);
+  margin: 0 var(--margin-in) 0 0;
+}
+
+#right {
+  background: url(https://na.cdn.beatsaver.com/adda7d452d0d69a816237ca6daa15ba1b968cdd2.jpg);
+  float: left;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, var(--inclineperc) 100%);
+  margin: 0 0 0 var(--margin-in);
+}
+
+#divider {
+  --width: calc(var(--box-size) / 8);
+  
+  z-index: 10;
+  background-color: #f33;
+  width: var(--width);
+  height: var(--box-size);
+  left: calc(var(--box-size) - calc(var(--width)) / 2);
+  position: absolute;
+  transform: skew(11deg);
+}
