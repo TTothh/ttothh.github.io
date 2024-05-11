@@ -2,7 +2,7 @@
   --box-size: 200px;
   --incline: 20;
   --inclineperc: calc(var(--incline) * 1%);
-  --margin-in: calc((0 - calc(var(--incline) / 2 * 1px)) - (var(--box-size) / var(--incline)));
+  --margin-in: calc((0px - (var(--box-size) / var(--incline)));
 }
 
 .box {
