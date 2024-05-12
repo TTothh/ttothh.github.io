@@ -1,47 +1,69 @@
 :root {
 	--box-size: 200;
-	--incline: 40;
+	--incline: 10;
 
 	--box-size-px: calc(1px * var(--box-size));
 	--incline-px: calc(var(--box-size-px) / 100 * var(--incline));
-
-	--incline-perc: calc(1% * var(--incline));
+	--incline-perc: calc(1vw * var(--incline));
 
 	--margin-neg: calc(0px - (var(--incline-px) / 2));
 }
 
+body {
+	margin: 0;
+}
+
 .box {
-	width: var(--box-size-px);
-	height: var(--box-size-px);
+	background-position: center left;
+	background-repeat: no-repeat;
+	background-size: cover;
+	
+	width: calc(50vw + (var(--incline-perc) / 2));
+	height: 100vh;
+	
 	margin: 0;
 	padding: 0;
 }
 
+#container {
+	width: 100vw;
+	height: 100vh;
+}
+
 #left {
-	background: url(https://styles.redditmedia.com/t5_2tny5/styles/communityIcon_jym3fzfhn7r61.png);
+	background-image: url("Images/rockmaraton.jpg");
 	float: left;
 	clip-path: polygon(0% 0%, calc(100% - var(--incline-perc)) 0%, 100% 100%, 0% 100%);
 	margin: 0 var(--margin-neg) 0 0;
+	z-index: 1;
 }
 
 #right {
-	background: url(https://na.cdn.beatsaver.com/adda7d452d0d69a816237ca6daa15ba1b968cdd2.jpg);
-	float: left;
+	background-image: url("Images/rendezvenynaptar.jpg");
+	float: right;
 	clip-path: polygon(0% 0%, 100% 0%, 100% 100%, var(--incline-perc) 100%);
 	margin: 0 0 0 var(--margin-neg);
+	z-index: 2;
+	
+	top: 0;
+	right: 0;
+	position: absolute;
 }
 
 #divider {
-	--width: calc(var(--box-size-px) / 8);
-	--ratio: calc(var(--incline) / var(--box-size));
-	--skewAngle: calc(2rad * tan(var(--ratio)));
-	--position: calc(var(--box-size-px) - (var(--incline-px) / 2) - (var(--width) / 2));
-
-	z-index: 10;
-	background-color: #f33;
+	--width-init: calc(100vw / 25);
+	--width: calc(var(--incline-perc) + var(--width-init));
+	--left: calc(50vw - (var(--width) / 2));
+	
+	clip-path: polygon(0% 0%, calc(100% - var(--incline-perc)) 0%, 100% 100%, calc(0% + var(--incline-perc)) 100%);
+	
+	background-color: rgba(255, 51, 51, 1);
+	top: 0;
+	left: var(--left);
+	
 	width: var(--width);
-	height: var(--box-size-px);
-	left: var(--position);
+	height: 100vh;
 	position: absolute;
-	transform: skewX(var(--skewAngle));
+	
+	z-index: 10;
 }
