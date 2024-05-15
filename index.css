@@ -1,8 +1,10 @@
 :root {
+	--no-rows: 1; /*reserved for future use*/
+	
 	--incline: 10;
 	--incline-perc: calc(1vw * var(--incline));
 	
-	--box-width: 50;
+	--box-width: 70;
 	--box-width-perc: calc(1vw * var(--box-width) + (var(--incline-perc) / 2));
 
 }
@@ -14,7 +16,7 @@ body {
 .box {
 	background-position: left center;
 	background-repeat: no-repeat;
-	background-size: 100%;
+	background-size: 100vh;
 	
 	width: var(--box-width-perc);
 	height: 100vh;
@@ -64,16 +66,20 @@ body {
 	z-index: 10;
 }
 
-#left:hover {
-	animation: left-left 0.5s linear forwards;
+#right:hover {
+	animation: expand 0.5s linear forwards;
 }
 
 #left:hover ~ #right {
-	animation: left-right 0.5s linear forwards;
+	animation: contract 0.5s linear forwards;
+}
+
+#right:hover ~ #divider {
+	animation: divider-left 0.5s linear forwards;
 }
 
 #left:hover ~ #divider {
-	animation: left-divider 0.5s linear forwards;
+	animation: divider-right 0.5s linear forwards;
 }
 
 @keyframes left-left {
