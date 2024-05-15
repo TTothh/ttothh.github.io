@@ -5,7 +5,8 @@
 	--incline-perc: calc(1vw * var(--incline));
 	
 	--box-width: 70;
-	--box-width-perc: calc(1vw * var(--box-width) + (var(--incline-perc) / 2));
+	/*can't go over 100% on clip-path so we need to add incline*/
+	--box-width-perc: calc(1vw * var(--box-width) + var(--incline-perc) / 2);
 
 }
 
@@ -16,7 +17,7 @@ body {
 .box {
 	background-position: left center;
 	background-repeat: no-repeat;
-	background-size: 100vh;
+	background-size: cover;
 	
 	width: var(--box-width-perc);
 	height: 100vh;
@@ -32,30 +33,33 @@ body {
 
 #left {
 	background-image: url("Images/rockmaraton.jpg");
+	clip-path: polygon(0 0, calc(100% - var(--incline-perc) * 2 - 14vw) 0, calc(100% - 14vw) 100%, 0 100%);
 	float: left;
-	clip-path: polygon(0% 0%, calc(100% - var(--incline-perc)) 0%, 100% 100%, 0% 100%);
 	z-index: 1;
+	transition: 0.5s;
+	position: relative;
 }
 
 #right {
 	background-image: url("Images/rendezvenynaptar.jpg");
 	float: right;
-	clip-path: polygon(0% 0%, 100% 0%, 100% 100%, var(--incline-perc) 100%);
+	clip-path: polygon(20% 0%, 100% 0%, 100% 100%, calc(var(--incline-perc) * 2 + 20%) 100%);
 	z-index: 2;
 	
 	top: 0;
 	right: 0;
 	position: absolute;
+	transition: 0.5s;
 }
 
 #divider {
 	--width-init: calc(100vw / 25);
-	--width: calc(var(--incline-perc) + var(--width-init));
+	--width: calc(var(--incline-perc) * 2 + var(--width-init));
 	--left: calc(50vw - (var(--width) / 2));
 	
-	clip-path: polygon(0% 0%, calc(100% - var(--incline-perc)) 0%, 100% 100%, calc(0% + var(--incline-perc)) 100%);
+	clip-path: polygon(0% 0%, calc(100% - var(--incline-perc) * 2) 0%, 100% 100%, calc(0% + var(--incline-perc) * 2) 100%);
 	
-	background-color: rgba(255, 51, 51, 0.5);
+	background-color: rgba(255, 51, 51, 1);
 	top: 0;
 	left: var(--left);
 	
@@ -64,53 +68,50 @@ body {
 	position: absolute;
 	
 	z-index: 10;
+	transition: 0.5s;
 }
 
 #right:hover {
-	animation: expand 0.5s linear forwards;
+	z-index: 9;
+	width: calc(var(--box-width-perc) + 20vw);
+	clip-path: polygon(16% 0%, 100% 0%, 100% 100%, calc(var(--incline-perc) * 2 + 16%) 100%);
 }
 
-#left:hover ~ #right {
-	animation: contract 0.5s linear forwards;
+#left:hover {
+	animation: left-hover 0.5s forwards;
+	width: calc(var(--box-width-perc) + 20vw);
+	clip-path: polygon(0 0, calc(100% - var(--incline-perc) * 2 - 14vw) 0, calc(100% - 14vw) 100%, 0 100%);
+}
+
+#left:not(:hover) {
+	animation: left-not-hover 0.5s forwards;
 }
 
 #right:hover ~ #divider {
-	animation: divider-left 0.5s linear forwards;
+	left: calc(50vw - (var(--width) / 2) - 20vw);
 }
 
 #left:hover ~ #divider {
-	animation: divider-right 0.5s linear forwards;
+	left: calc(50vw - (var(--width) / 2) + 20vw);
 }
 
-@keyframes left-left {
-	0%   {
-		width: var(--box-width-perc);
-		clip-path: polygon(0% 0%, calc(var(--box-width-perc) - var(--incline-perc)) 0%, var(--box-width-perc) var(--box-width-perc), 0% var(--box-width-perc));
-	}
-	
-	100% {
-		width: calc(var(--box-width-perc) + 20vw);
-		clip-path: polygon(0% 0%, calc(100% - var(--incline-perc)) 0%, 100% 100%, 0% 100%);
-	}
-}
-
-@keyframes left-right {
-	0%   {
-		width: var(--box-width-perc);
-		clip-path: polygon(0% 0%, var(--box-width-perc) 0%, var(--box-width-perc) var(--box-width-perc), var(--incline-perc) var(--box-width-perc));
-	}
-	
-	100% {
-		width: calc(var(--box-width-perc) - 20vw);
-		clip-path: polygon(0% 0%, 100% 0%, var(--box-width-perc) var(--box-width-perc), var(--incline-perc) var(--box-width-perc));
-	}
-}
-@keyframes left-divider {
+@keyframes left-hover {
 	0% {
-		left: calc(50vw - (var(--width) / 2))
+		z-index: 3;
 	}
-	
 	100% {
-		left: calc(50vw - (var(--width) / 2) + 20vw)
+		z-index: 3;
+	}
+}
+
+@keyframes left-not-hover {
+	0% {
+		z-index: 3;
+	}
+	99% {
+		z-index: 3;
+	}
+	100% {
+		z-index: 1;
 	}
 }
