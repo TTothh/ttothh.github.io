@@ -3,10 +3,13 @@
 	
 	--incline: 10;
 	--incline-perc: calc(1vw * var(--incline));
+
+	--box-width: 50;
+	--box-width-max: 70;
 	
-	--box-width: 70;
 	/*can't go over 100% on clip-path so we need to add incline*/
 	--box-width-perc: calc(1vw * var(--box-width) + var(--incline-perc) / 2);
+	--box-width-max-perc: calc(1vw * var(--box-width-max) + var(--incline-perc) / 2);
 
 }
 
@@ -52,9 +55,10 @@ body {
 	transition: 0.5s;
 }
 
+/*Final. Don't touch*/
 #divider {
-	--width-init: calc(100vw / 25);
-	--width: calc(var(--incline-perc) * 2 + var(--width-init));
+	--width-init: calc(4wv);
+	--width: calc((var(--incline-perc) * 2) + var(--width-init));
 	--left: calc(50vw - (var(--width) / 2));
 	
 	clip-path: polygon(0% 0%, calc(100% - var(--incline-perc) * 2) 0%, 100% 100%, calc(0% + var(--incline-perc) * 2) 100%);
@@ -72,7 +76,6 @@ body {
 }
 
 #right:hover {
-	z-index: 9;
 	width: calc(var(--box-width-perc) + 20vw);
 	clip-path: polygon(16% 0%, 100% 0%, 100% 100%, calc(var(--incline-perc) * 2 + 16%) 100%);
 }
